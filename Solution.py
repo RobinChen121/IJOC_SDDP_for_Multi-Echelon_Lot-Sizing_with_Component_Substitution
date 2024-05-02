@@ -268,7 +268,7 @@ class Solution(object):
         if not self.IsPartialSolution:
             self.ComputeCost()
 
-            if model <> Constants.ModelYQFix:
+            if model < Constants.ModelYQFix: # 大于小于可以调整
                 self.ScenarioTree.FillQuantityToOrderFromMRPSolution(self)
 
     #This function prints a solution

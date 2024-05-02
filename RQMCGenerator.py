@@ -4,6 +4,8 @@ import os
 import numpy as np
 
 
+# 生成一个 0 到 1 之间的伪随机序列
+
 class RQMCGenerator(object):
 
     SavedValue = {}
@@ -39,24 +41,26 @@ class RQMCGenerator(object):
 
             if not os.name == 'nt':
                 cmd = './' + cmd
-            result = subprocess.check_output(cmd, shell=True)
-            restable = result.split("lattice", 10000)
-            restable2 = restable[len(restable) - 1].split("[", 10000)
-            restable3 = restable2[1].split("]", 10000)
-            resaslistofstring = restable3[0].split(',')
-            a = [float(ai) for ai in resaslistofstring]
-            #print(a)
-            #print(randomizer)
-            #print(min(randomizer[d] for d in range(dimensionpoint)))
+            result = subprocess.check_output(cmd, shell=True) # Run command with cmd arguments and return its output if no error.
+            restable = result.split(b"lattice", 10000)
+            restable2 = restable[len(restable) - 1].split(b"[", 10000)
+            restable3 = restable2[1].split(b"]", 10000)
+            resaslistofstring = restable3[0].split(b',')
+            a = [float(ai) for ai in resaslistofstring] # 生成一个随机序列
+            print(a)
+            print(randomizer)
+            print(min(randomizer[d] for d in range(dimensionpoint))) # 有些代码怪怪的
             RQMCGenerator.AddToSavedValue(nrpoints, dimensionpoint, a)
 
         result = [[(i * a[d] % nrpoints) / float(nrpoints) for d in range(dimensionpoint)] for i
                   in range(nrpoints)]
 
         result = [[(((i * a[d] % nrpoints) / float(nrpoints)) + randomizer[d]) % 1.0 for d in range(dimensionpoint)] for i
-                  in range(nrpoints)]
+                  in range(nrpoints)] # 看来是两种生成序列的方式，第二种还加了个伪随机数
 
+        # print(result)
         return result
+        
     
 
 # test

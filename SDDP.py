@@ -20,7 +20,7 @@ import copy
 import cplex
 
 # This class contains the attributes and methods allowing to define the SDDP algorithm.
-class SDDP(object):
+class SDDP(object): # 继承 object 类，python默认自动继承，不用写 object 了
 
     #return the object stage associated with the decision stage given in paramter
     def GetSDDPStage(self, decisionstage):
@@ -1125,3 +1125,6 @@ class SDDP(object):
                 self.ForwardStage[t].SDDPCuts.append(cut)
                 cut.BackwarStage = self.BackwardStage[t]
                 self.BackwardStage[t].SDDPCuts.append(cut)
+
+
+SDDP.GetSDDPStage(2)

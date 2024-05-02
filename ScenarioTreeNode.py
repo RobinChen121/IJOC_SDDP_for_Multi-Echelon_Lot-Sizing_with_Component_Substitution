@@ -264,7 +264,7 @@ class ScenarioTreeNode(object):
             #The method continue to generate points until to have n distinct points
             while len(nextdemands[0]) < nrpoints and newnrpoints <= 1000:
                 if Constants.Debug and len(nextdemands[0])>0:
-                    print "try with %r points because only %r  points were generated, required: %r" %(newnrpoints, len( nextdemands[0]), nrpoints )
+                    print("try with %r points because only %r  points were generated, required: %r" %(newnrpoints, len( nextdemands[0]), nrpoints ))
                 points = [[0.0 for pt in range(newnrpoints)] for p in range(dimensionpoint)]
                 nrnonzero = sum(1 for p in range(dimensionpoint) if average[p] > 0)
                 idnonzero = [p for p in range(dimensionpoint) if average[p] > 0]
@@ -291,7 +291,7 @@ class ScenarioTreeNode(object):
                             points[idnonzero[p]] [i]= float ( np.round( rqmcpoints[ p ][i], 0 ) )
 
 
-        if method == Constants.All and distribution <> Constants.Binomial:
+        if method == Constants.All and distribution < Constants.Binomial: # < or >
             points = [[0.0 for pt in range(nrpoints)] for p in range(dimensionpoint)]
             nrnonzero = sum(1 for p in range(dimensionpoint) if average[p] > 0)
             idnonzero = [p for p in range(dimensionpoint) if average[p] > 0]
@@ -306,7 +306,7 @@ class ScenarioTreeNode(object):
             nrnonzero = sum(1 for p in range(dimensionpoint) if average[p] > 0)
             idnonzero = [p for p in range(dimensionpoint) if average[p] > 0]
 
-            if nrnonzero > 1 or nrpoints <> 8:
+            if nrnonzero > 1 or nrpoints > 8: # the last may be < or >
                 raise NameError( "binomial implemented only for dimension 1 and 8 points not %r -%r" %(nrnonzero, nrpoints) )
 
             nonzeropoints = [range(0,8)]
@@ -387,13 +387,13 @@ class ScenarioTreeNode(object):
 
     #This function display the tree
     def Display(self):
-        print "Demand of node( %d ): %r" %(self.NodeNumber, self.Demand)
-        print "Probability of branch ( %d ): %r" %( self.NodeNumber, self.Probability )
-        print "QuanitityVariable of node( %d ): %r" %( self.NodeNumber, self.QuanitityVariable )
-        print "ConsumptionVariable of node( %d ): %r" % (self.NodeNumber, self.ConsumptionVariable)
-        print "ProductionVariable of node( %d ): %r" %( self.NodeNumber, self.ProductionVariable )
-        print "InventoryVariable of node( %d ): %r" %( self.NodeNumber, self.InventoryVariable )
-        print "BackOrderVariable of node( %d ): %r" %( self.NodeNumber, self.BackOrderVariable )
+        print("Demand of node( %d ): %r" %(self.NodeNumber, self.Demand))
+        print("Probability of branch ( %d ): %r" %( self.NodeNumber, self.Probability ))
+        print("QuanitityVariable of node( %d ): %r" %( self.NodeNumber, self.QuanitityVariable ))
+        print("ConsumptionVariable of node( %d ): %r" % (self.NodeNumber, self.ConsumptionVariable))
+        print("ProductionVariable of node( %d ): %r" %( self.NodeNumber, self.ProductionVariable ))
+        print("InventoryVariable of node( %d ): %r" %( self.NodeNumber, self.InventoryVariable ))
+        print("BackOrderVariable of node( %d ): %r" %( self.NodeNumber, self.BackOrderVariable ))
         for b in self.Branches:
             b.Display()
 
@@ -456,7 +456,7 @@ class ScenarioTreeNode(object):
                 distance = distance + math.pow(nodeinventory - realinventory, 2)
 
         if Constants.Debug:
-            print "for node %r distance based on status %r"%(self.NodeNumber, distance)
+            print("for node %r distance based on status %r"%(self.NodeNumber, distance))
         return math.sqrt(distance)
 
 
@@ -468,7 +468,7 @@ class ScenarioTreeNode(object):
                 distance = distance + math.pow(self.Demand[p] - demands[p], 2)
 
         if Constants.Debug:
-            print "for node %r distance based on demand %r" % (self.NodeNumber, distance)
+            print("for node %r distance based on demand %r" % (self.NodeNumber, distance))
         return math.sqrt(distance)
 
     #Return true if the quantity proposed in the node are above the current level of inventory
@@ -480,7 +480,7 @@ class ScenarioTreeNode(object):
         differencevector = [sumvector[q] - levelofinventory[q] for q in self.Instance.ProductSet]
 
         if Constants.Debug:
-            print "for node %r feasible: %r - SumVect: %r" % (self.NodeNumber, result, differencevector)
+            print("for node %r feasible: %r - SumVect: %r" % (self.NodeNumber, result, differencevector))
 
         return result
 
@@ -508,7 +508,7 @@ class ScenarioTreeNode(object):
 
         result =  self.QuantityToOrderNextTime[p] + echelonstock
         if Constants.Debug:
-            print "t= %r Compute S, inv level %r echelon %r quantity %r" % (self.Time, inventory, echelonstock, self.QuantityToOrderNextTime[p] )
+            print("t= %r Compute S, inv level %r echelon %r quantity %r" % (self.Time, inventory, echelonstock, self.QuantityToOrderNextTime[p] ))
 
         return result
 
