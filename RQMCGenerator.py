@@ -57,3 +57,7 @@ class RQMCGenerator(object):
                   in range(nrpoints)]
 
         return result
+    
+
+# test
+RQMCGenerator.RQMC01(10, 5)
