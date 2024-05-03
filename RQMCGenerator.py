@@ -47,9 +47,9 @@ class RQMCGenerator(object):
             restable3 = restable2[1].split(b"]", 10000)
             resaslistofstring = restable3[0].split(b',')
             a = [float(ai) for ai in resaslistofstring] # 生成一个随机序列
-            print(a)
-            print(randomizer)
-            print(min(randomizer[d] for d in range(dimensionpoint))) # 有些代码怪怪的
+            # print(a)
+            # print(randomizer)
+            # print(min(randomizer[d] for d in range(dimensionpoint))) # 有些代码怪怪的
             RQMCGenerator.AddToSavedValue(nrpoints, dimensionpoint, a)
 
         result = [[(i * a[d] % nrpoints) / float(nrpoints) for d in range(dimensionpoint)] for i

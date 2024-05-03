@@ -128,8 +128,9 @@ class InstanceReaderGrave(InstanceReader):
                                        self.Instance.NrTimeBucket - self.Instance.NrTimeBucketWithoutUncertaintyAfter)
                 for t in stochastictime:
                     timeindex += 1
-
-                    if t <> self.Instance.NrTimeBucketWithoutUncertaintyBefore + int(self.DTFile[timeindex][0]) - 1:
+                    
+                    # < or >
+                    if t < self.Instance.NrTimeBucketWithoutUncertaintyBefore + int(self.DTFile[timeindex][0]) - 1:
                         raise NameError("Wrong time %d - %d -%d" % (t, int(self.DTFile[timeindex][0]) - 1, timeindex))
 
                     self.Instance.ForecastedAverageDemand[t][prodindex] = float(self.DTFile[timeindex][p + 1])

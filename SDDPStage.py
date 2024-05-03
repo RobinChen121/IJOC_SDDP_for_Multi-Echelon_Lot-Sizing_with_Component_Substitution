@@ -1637,7 +1637,8 @@ class SDDPStage(object):
                 duals = sol.get_linear_slacks(self.IndexCutConstraint)
                 #print("cut slack %s"%duals)
                 for i in range(len(duals)):
-                    if duals[i] <> 0:
+                    # < or >
+                    if duals[i] < 0:
                         c = self.ConcernedCutinConstraint[i]
                         c.LastIterationWithDual = self.SDDPOwner.CurrentIteration
 
@@ -1926,7 +1927,8 @@ class SDDPStage(object):
             scenario = self.ConcernedScenarioPIFlowConstraint[i]
             cut = cuts[scenario]
             # duals[i] = duals[i] * self.SDDPOwner.SetOfSAAScenario[scenario].Probability
-            if duals[i] <> 0:
+            # < or >
+            if duals[i] < 0:
                 p = self.ConcernedProductPIFlowConstraint[i]
                 periodproduction = self.ConcernedTimePIFlowConstraint[i] - self.Instance.LeadTimes[p]
 
@@ -1955,7 +1957,8 @@ class SDDPStage(object):
 
 
         for i in range(len(duals)):
-            if duals[i] <> 0:
+            # < or >
+            if duals[i] < 0:
                 scenario = self.ConcernedScenarioFlowConstraint[i]
                 cut = cuts[scenario]
                 p = self.ConcernedProductFlowConstraint[i]
@@ -1987,7 +1990,8 @@ class SDDPStage(object):
 
             scenario = self.ConcernedScenarioPIProductionQuantityConstraint[i]
             cut = cuts[scenario]
-            if duals[i] <> 0:
+            # < or >
+            if duals[i] < 0:
                 p = self.ConcernedProductPIProductionQuantityConstraint[i]
                 t = self.ConcernedTimePIProductionQuantityConstraint[i]
                 cut.IncreaseCoefficientProduction(p, t, -1*self.GetBigMValue(p) * duals[i])
@@ -2000,7 +2004,8 @@ class SDDPStage(object):
         duals = sol.get_dual_values(self.IndexProductionQuantityConstraint)
         #print("Duals Production:::%s"%duals)
         for i in range(len(duals)):
-            if duals[i] <> 0:
+            # < or >
+            if duals[i] < 0:
                 scenario = self.ConcernedScenarioProductionQuantityConstraint[i]
                 cut = cuts[scenario]
                 #duals[i] = duals[i] * self.SDDPOwner.SetOfSAAScenario[scenario].Probability
@@ -2013,7 +2018,8 @@ class SDDPStage(object):
             print("Increase cut with capacity dual")
         duals = sol.get_dual_values(self.IndexPICapacityConstraint)
         for i in range(len(duals)):
-            if duals[i] <> 0:
+            # < or >
+            if duals[i] < 0:
                 scenario = self.ConcernedScenarioPICapacityConstraint[i]
                 cut = cuts[scenario]
                 # duals[i] = duals[i] * self.SDDPOwner.SetOfSAAScenario[scenario].Probability
@@ -2025,7 +2031,8 @@ class SDDPStage(object):
             print("Increase cut with capacity dual")
          duals = sol.get_dual_values(self.IndexCapacityConstraint)
          for i in range(len(duals)):
-             if duals[i] <> 0:
+             # < or >
+             if duals[i] < 0:
                  scenario = self.ConcernedScenarioCapacityConstraint[i]
                  cut = cuts[scenario]
                  #duals[i] = duals[i] * self.SDDPOwner.SetOfSAAScenario[scenario].Probability
@@ -2039,8 +2046,8 @@ class SDDPStage(object):
             duals = sol.get_dual_values(self.IndexCutConstraint)
             for i in range(len(duals)):
 
-
-                if duals[i] <> 0:
+                # < or >
+                if duals[i] < 0:
                     scenario = self.ConcernedScenarioCutConstraint[i]
                     cut = cuts[scenario]
                     c = self.ConcernedCutinConstraint[i]

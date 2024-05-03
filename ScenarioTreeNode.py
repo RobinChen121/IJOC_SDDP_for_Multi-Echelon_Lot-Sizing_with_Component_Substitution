@@ -3,7 +3,7 @@ import math
 from Constants import Constants
 from Tool import Tool
 from RQMCGenerator import RQMCGenerator
-from scipy import stats, random
+from scipy import stats
 
 
 class ScenarioTreeNode(object):

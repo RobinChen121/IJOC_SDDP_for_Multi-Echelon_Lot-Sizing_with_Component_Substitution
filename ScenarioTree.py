@@ -2,7 +2,7 @@ from __future__ import absolute_import, division, print_function
 
 from ScenarioTreeNode import ScenarioTreeNode
 from Scenario import Scenario
-import cPickle as pickle
+import pickle  # import cPickle as pickle
 import numpy as np
 from RQMCGenerator import RQMCGenerator
 from Constants import Constants
