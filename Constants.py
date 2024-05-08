@@ -1,5 +1,6 @@
 #This Class define a set of constant/parameters used in the rest of the code.
-from __future__ import absolute_import, division, print_function
+# 定义了算法中使用的各种参数
+from __future__ import absolute_import, division, print_function ## 这个包是为了在 python 2 中用 python 3 的功能
 class Constants( object ):
     PathInstances = "./Instances/"
     PathCPLEXLog = "./CPLEXLog/"
@@ -60,13 +61,13 @@ class Constants( object ):
 
     #Code parameter
     Infinity = 9999999999999
-    AlgorithmTimeLimit = 7200
+    AlgorithmTimeLimit = 7200 #算法计算时长20个小时
     MIPBasedOnSymetricTree = False
     RQMCAggregate = False
 
     #SDDPparameters
     AlgorithmOptimalityTolerence = 0.01#0.0005
-    SDDPIterationLimit = 500
+    SDDPIterationLimit = 500 # SDDP 最大迭代次数500次
     SDDPPrintDebugLPFiles = False
     PrintSDDPTrace = True
     GenerateStrongCut = True

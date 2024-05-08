@@ -5,6 +5,7 @@ import numpy as np
 
 
 # 生成一个 0 到 1 之间的伪随机序列
+# can't work in mac system
 
 class RQMCGenerator(object):
 

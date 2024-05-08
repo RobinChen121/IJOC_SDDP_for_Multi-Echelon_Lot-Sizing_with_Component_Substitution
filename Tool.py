@@ -38,8 +38,8 @@ class Tool:
     def ReadDataFrame(wb2, framename):
         sheet = wb2[framename];
         data = sheet.values
-        cols = next(data)[1:]
-        cols = list(cols)
+        cols = next(data)[1:] # The next() function returns the next item from the iterator
+        cols = list(cols) 
         #remove the None from the column names
         for i in range(len(cols)):
             if cols[i] == None:

@@ -80,7 +80,7 @@ class SDDPStage(object):
         self.StartCutRHSVariable = 0
         # Demand and materials requirement: set the value of the invetory level and backorder quantity according to
         #  the quantities produced and the demand
-        self.M = cplex.infinity
+        self.M = cplex.infinity # 大 M
         self.CurrentTrialNr = -1
         #The quantity to order (filled after having solve the MIPs for all scenario)
         self.QuantityValues = []
@@ -196,7 +196,7 @@ class SDDPStage(object):
     #Compute the cost of the stage at the current iteration
     def ComputePassCost(self):
         totalproba = sum(self.SDDPOwner.CurrentSetOfTrialScenarios[w].Probability
-                            for w in self.TrialScenarioNrSet)
+                            for w in self.TrialScenarioNrSet) 
         self.PassCost = sum(self.PartialCostPerScenario[w] * self.SDDPOwner.CurrentSetOfTrialScenarios[w].Probability
                             for w in self.TrialScenarioNrSet) / totalproba
 

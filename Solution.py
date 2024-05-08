@@ -4,7 +4,7 @@ import math
 import csv
 from ScenarioTree import ScenarioTree
 from Constants import Constants
-from Tool import Tool
+from Tool import Tool # 自定义的一个 class
 from Instance import Instance
 import openpyxl as opxl
 from ast import literal_eval
@@ -121,6 +121,8 @@ class Solution(object):
         return generaldf
 
     # This function print the solution different pickle files
+    # pickle 是 python 自己的二进制存储文件
+    # pandas 包含 to_pickle 方法
     def PrintToPickle(self, description):
             prodquantitydf, inventorydf, productiondf, bbackorderdf, consumptiondf, fixedqvaluesdf = self.DataFrameFromList()
 
@@ -144,7 +146,7 @@ class Solution(object):
     def PrintToExcel(self, description):
         prodquantitydf, inventorydf, productiondf, bbackorderdf, consumptiondf,  fixedqvaluesdf = self.DataFrameFromList()
         writer = pd.ExcelWriter(self.GetSolutionFileName(description), engine='openpyxl')
-        prodquantitydf.to_excel(writer, 'ProductionQuantity')
+        prodquantitydf.to_excel(writer, 'ProductionQuantity') # 第二个参数是sheetname
         productiondf.to_excel(writer, 'Production')
         inventorydf.to_excel(writer, 'InventoryLevel')
         bbackorderdf.to_excel(writer, 'BackOrder')
