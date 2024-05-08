@@ -198,8 +198,9 @@ class InstanceReaderJDA(InstanceReader):
             #Find the operation producing p
             operations = [buf_op[0] for buf_op in self.OpProduceBuffer if  buf_op[1] == self.Instance.ProductName[p] ]
             leadtimeop = [buf_op[2] for buf_op in self.OpProduceBuffer if buf_op[1] == self.Instance.ProductName[p]]
-
-            if len(operations) <> 1:
+            
+            # < or >
+            if len(operations) < 1:
                 print( "there are %s operations for %s" %( len(operations), self.Instance.ProductName[p] ) )
 
             first = True
@@ -227,8 +228,8 @@ class InstanceReaderJDA(InstanceReader):
 
     # Read the holding costs
     def GenerateHoldingCostCost(self, e = "n"):
-
-        if e<> "n":
+        # < or >
+        if e < "n":
             raise NameError('instance from JDA can only handle normal echelon stock')
 
         # Assume an inventory holding cost of 0.1 per day for now
@@ -312,7 +313,8 @@ class InstanceReaderJDA(InstanceReader):
             operationsName = [buf_op[0] for buf_op in self.OpProduceBuffer
                               if buf_op[1] == self.Instance.ProductName[p]]
             operations = [op for op in self.Operation if op[0] in operationsName]
-            if len(operations) <> 1:
+            # < or >
+            if len(operations) < 1:
                 print("there are %s operations for %s" % (len(operations), self.Instance.ProductName[p]))
 
             first = True
@@ -320,7 +322,8 @@ class InstanceReaderJDA(InstanceReader):
             for op in operations:
 
                 # Get the product id
-                if not first and op[1] <> cost:
+                # < or >
+                if not first and op[1] < cost:
                     print("operation with different costs...")
                 cost = float(op[1])
                 self.Instance.VariableCost[p] = cost
@@ -339,7 +342,8 @@ class InstanceReaderJDA(InstanceReader):
 
     #Read the setup costs from the files
     def GenerateSetup(self, e="n"):
-        if e<> "n":
+        # < or >
+        if e < "n":
             raise NameError( "Instance JDA can only handle normal setups" )
 
         TBO = [3 for p in self.Instance.ProductSet]
@@ -363,7 +367,8 @@ class InstanceReaderJDA(InstanceReader):
 
     #Read the resource capacity and consumption from the files
     def GenerateCapacity(self, capacityfactor):
-                if capacityfactor <> 0:
+                # < or >
+                if capacityfactor < 0:
                     raise NameError( " Instances form JDA only for capacity factor of 0 " )
                 self.Instance.Capacity = [0] * self.Instance.NrResource
 
@@ -381,7 +386,8 @@ class InstanceReaderJDA(InstanceReader):
                     operationsName = [buf_op[0] for buf_op in self.OpProduceBuffer
                                       if buf_op[1] == self.Instance.ProductName[p]]
                     operations = [op for op in self.Operation if op[0] in operationsName]
-                    if len(operationsName) <> 1:
+                    # < or >
+                    if len(operationsName) < 1:
                         print("there are %s operations for %s" % (len(operations), self.Instance.ProductName[p]))
 
                     for op in operationsName:

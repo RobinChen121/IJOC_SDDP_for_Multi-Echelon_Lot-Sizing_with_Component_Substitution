@@ -218,8 +218,8 @@ class InstanceReaderTemplemeier(InstanceReader):
                         stochastictime = range( self.Instance.NrTimeBucketWithoutUncertaintyBefore, self.Instance.NrTimeBucket - self.Instance.NrTimeBucketWithoutUncertaintyAfter)
                         for t in stochastictime:
                             timeindex += 1
-
-                            if t <>  self.Instance.NrTimeBucketWithoutUncertaintyBefore + int(self.DTFile[timeindex][0]) - 1:
+                            # < or >
+                            if t <  self.Instance.NrTimeBucketWithoutUncertaintyBefore + int(self.DTFile[timeindex][0]) - 1:
                                 raise NameError( "Wrong time %d - %d -%d"%( t , int(self.DTFile[timeindex][0]) - 1 , timeindex ) )
 
                             self.Instance.ForecastedAverageDemand[t][prodindex] = float( self.DTFile[timeindex][p+1] )
@@ -279,8 +279,8 @@ class InstanceReaderTemplemeier(InstanceReader):
         for p in self.Instance.ProductSet:
            self.Instance.SetupCosts[p] = sum( float( self.TMPFile[startsetup + p][i] ) for i in range( self.Instance.NrResource) )
            for i in range( self.Instance.NrResource):
-               if float( self.TMPFile[startsetup + p][i] ) > 0 and float( self.TMPFile[startsetup + p][i] ) <> self.Instance.SetupCosts[p] \
-                       or self.Instance.SetupCosts[p] <>  computedsetup[p]:
+               if float( self.TMPFile[startsetup + p][i] ) > 0 and float( self.TMPFile[startsetup + p][i] ) > self.Instance.SetupCosts[p] \
+                       or self.Instance.SetupCosts[p] <  computedsetup[p]: # 2 and 3: < or >
                    print("warning: The setup cost are not the same as the ones in the file!")
                   # raise NameError( "The setup cost are not read as expected" )
 
@@ -320,8 +320,8 @@ class InstanceReaderTemplemeier(InstanceReader):
                                                         for p in self.Instance.ProductSet)\
                                                    /float(self.CapFile[k][1])))
 
-
-        if capacityfactor <> 0:
+        # < or >
+        if capacityfactor < 0:
             for k in range(self.Instance.NrResource):
                 self.ComputeAverageDependentDemand()
                 self.Instance.Capacity[k] = math.ceil(float(sum(self.DependentAverageDemand[p] * self.Instance.ProcessingTime[p][k]

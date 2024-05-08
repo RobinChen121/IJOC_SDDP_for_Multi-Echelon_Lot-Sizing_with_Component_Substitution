@@ -864,7 +864,8 @@ class MIPSolver(object):
     def CreateCapacityConstraints(self):
 
         secenarioset = [0]
-        if self.Model <> Constants.ModelYQFix:
+        # < or >
+        if self.Model < Constants.ModelYQFix:
             secenarioset = self.ScenarioSet
         # Capacity constraint
         if self.Instance.NrResource > 0:
@@ -1200,8 +1201,9 @@ class MIPSolver(object):
                           for t in self.Instance.TimeBucketSet:
                                IndexQuantity1 = self.GetIndexQuantityVariable(p, t, w1)
                                IndexQuantity2 = self.GetIndexQuantityVariable(p, t, w2)
-
-                               if not AlreadyAdded[IndexQuantity1][ IndexQuantity2] and IndexQuantity1 <> IndexQuantity2:
+                               
+                               # < or >
+                               if not AlreadyAdded[IndexQuantity1][ IndexQuantity2] and IndexQuantity1 < IndexQuantity2:
                                    AlreadyAdded[IndexQuantity1][IndexQuantity2] = True
                                    AlreadyAdded[IndexQuantity2][IndexQuantity1] = True
                                    vars = [IndexQuantity1, IndexQuantity2]
@@ -1482,7 +1484,8 @@ class MIPSolver(object):
         self.Cplex.solve()
         nrvariable= -1
         nrconstraints = -1
-        if  not self.EvaluateSolution and not self.EVPI and self.logfilename <> "NO":
+        # < or >
+        if  not self.EvaluateSolution and not self.EVPI and self.logfilename < "NO":
             nrvariable, nrconstraints = self.ReadNrVariableConstraint(Constants.GetPathCPLEXLog()+"/%s.txt" % self.logfilename)
 
         buildtime = end_modeling - start_time
@@ -1622,8 +1625,8 @@ class MIPSolver(object):
         solution = Solution(self.Instance, solquantity, solproduction, solinventory, solbackorder, solconsumption, scenarios,
                                self.DemandScenarioTree, partialsolution = partialsol)
 
-
-        if self.Model <> Constants.ModelYQFix:
+        # < or >
+        if self.Model < Constants.ModelYQFix:
             self.DemandScenarioTree.FillQuantityToOrder(sol)
             self.DemandScenarioTree.FillQuantityToOrderFromMRPSolution(solution)
 
@@ -1672,7 +1675,7 @@ class MIPSolver(object):
 
         Sum = sum(costperscenarion[w] for w in self.ScenarioSet)
         Average = Sum / self.NrScenario
-        sumdeviation = sum(math.pow((costperscenarion[w] - Average), 2) for s in self.ScenarioSet)
+        sumdeviation = sum(math.pow((costperscenarion[s] - Average), 2) for s in self.ScenarioSet)
         std_dev = math.sqrt( (sumdeviation / self.NrScenario ) )
 
 
