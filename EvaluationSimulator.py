@@ -404,7 +404,7 @@ class EvaluationSimulator(object):
                      / sum(Probabilities[k][m]
                            for k in range(len(Evaluated))
                            for m in range(self.EvalatorIdentificator.NrEvaluation) if Evaluated[k][m] >= 0
-                            if Evaluated[k]>=0))
+                            if Evaluated[k][m]>=0)) # revise an error
         K = len(Evaluated)
         M = self.EvalatorIdentificator.NrEvaluation
         variancepondere = (1.0 / K) * \

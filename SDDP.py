@@ -1127,4 +1127,4 @@ class SDDP(object): # 继承 object 类，python默认自动继承，不用写 o
                 self.BackwardStage[t].SDDPCuts.append(cut)
 
 
-SDDP.GetSDDPStage(2)
+# SDDP.GetSDDPStage(2)

@@ -5,7 +5,7 @@ from EvaluatorIdentificator import EvaluatorIdentificator
 from EvaluationSimulator import EvaluationSimulator
 from SDDP import SDDP
 import subprocess
-import cPickle as pickle
+import pickle
 import csv
 import datetime
 
@@ -122,8 +122,8 @@ class Evaluator( object ):
 
                 if not solution.IsPartialSolution:
                     solution.ComputeCost()
-
-                    if self.TestIdentifier.Model <> Constants.ModelYQFix:
+                    # < or >
+                    if self.TestIdentifier.Model < Constants.ModelYQFix:
                         solution.ScenarioTree.FillQuantityToOrderFromMRPSolution(solution)
 
         evaluator = EvaluationSimulator(self.Instance, [solution], [self.Solver.SDDPSolver],
@@ -194,9 +194,9 @@ class Evaluator( object ):
             print("print the test result ./Test/TestResult_%s_%s.csv" % (
                 self.TestIdentifier.GetAsString(), self.EvalutorIdentificator.GetAsString()))
         myfile = open(r'./Test/TestResult_%s_%s.csv' % (self.TestIdentifier.GetAsString(),
-                                                        self.EvalutorIdentificator.GetAsString()), 'wb')
+                                                        self.EvalutorIdentificator.GetAsString()), 'w')
         wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-        wr.writerow(data)
+        wr.writerow(data) # an error, str or bytes 
         myfile.close()
 
     #This function runs the evaluation for the just completed test :

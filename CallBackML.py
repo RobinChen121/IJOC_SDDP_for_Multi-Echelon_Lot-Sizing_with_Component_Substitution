@@ -13,7 +13,7 @@ class CallBackML(LazyConstraintCallback):
 #class SDDPCallBack(UserCutCallback):
     def __call__(self):
         if Constants.Debug:
-             print "enter call back"
+             print("enter call back")
         indexarray = [self.SDDPOwner.ForwardStage[0].GetIndexProductionVariable(p, t) for t in
                       self.SDDPOwner.Instance.TimeBucketSet
                       for p in self.SDDPOwner.Instance.ProductSet]
@@ -23,7 +23,7 @@ class CallBackML(LazyConstraintCallback):
                        for p in self.SDDPOwner.Instance.ProductSet]
                       for t in self.SDDPOwner.Instance.TimeBucketSet]
         if Constants.Debug:
-            print "run sddp"
+            print("run sddp")
 
         solution = self.MLLocalSearch.RunSDDP()
 

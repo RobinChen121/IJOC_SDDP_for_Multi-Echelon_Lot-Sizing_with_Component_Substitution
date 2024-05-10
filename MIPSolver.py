@@ -738,12 +738,11 @@ class MIPSolver(object):
                                         vars = vars + [ int(self.GetIndexConsumptionVariable(q, k, t, w))]
                                         coeff = coeff + [1.0]
                                         righthandside = [0.0]
-
-                                #self.PrintConstraint(vars, coeff, righthandside)
-                                self.Cplex.linear_constraints.add(lin_expr=[cplex.SparsePair(vars, coeff)],
+                                        #self.PrintConstraint(vars, coeff, righthandside)
+                                        self.Cplex.linear_constraints.add(lin_expr=[cplex.SparsePair(vars, coeff)],
                                                                           senses=["E"],
                                                                           rhs=righthandside,
-                                                                          names=["quantityConsumption%da%da%da%d" % (p, k, t, w)])#
+                                                                          names=["quantityConsumption%da%da%da%d" % (q, k, t, w)])#
 
 
 
@@ -1458,10 +1457,10 @@ class MIPSolver(object):
 
         #name = "mrp_log%r_%r_%r" % ( self.Instance.InstanceName, self.Model, self.DemandScenarioTree.Seed )
         #file = open("/tmp/thesim/CPLEXLog/%s.txt" % self.logfilename, 'w')
-        self.Cplex.set_log_stream(Constants.GetPathCPLEXLog()+"/%s.txt" % self.logfilename)
-        self.Cplex.set_results_stream(Constants.GetPathCPLEXLog()+"/%s.txt" % self.logfilename)
-        self.Cplex.set_warning_stream(Constants.GetPathCPLEXLog()+"/%s.txt" % self.logfilename)
-        self.Cplex.set_error_stream(Constants.GetPathCPLEXLog()+"/%s.txt" % self.logfilename)
+        # self.Cplex.set_log_stream(Constants.GetPathCPLEXLog()+"/%s.txt" % self.logfilename) # revise, errors reported in cplex
+        # self.Cplex.set_results_stream(Constants.GetPathCPLEXLog()+"/%s.txt" % self.logfilename)
+        # self.Cplex.set_warning_stream(Constants.GetPathCPLEXLog()+"/%s.txt" % self.logfilename)
+        # self.Cplex.set_error_stream(Constants.GetPathCPLEXLog()+"/%s.txt" % self.logfilename)
 
         # tune the paramters
         self.Cplex.parameters.timelimit.set(Constants.AlgorithmTimeLimit)

@@ -422,7 +422,8 @@ class MLLocalSearch(object):
 
         iterationtabu = [[0 for p in self.Instance.ProductSet] for t in self.Instance.TimeBucketSet]
         curentiterationLS = 0
-        while ( not self.UseTabu and self.DescentBestMove[0] <> "") or (self.UseTabu and (self.TabuBestSol is None or curentiterationLS < Constants.MLLSNrIterationTabu)):
+        # < or >
+        while ( not self.UseTabu and self.DescentBestMove[0] < "") or (self.UseTabu and (self.TabuBestSol is None or curentiterationLS < Constants.MLLSNrIterationTabu)):
                 self.TabuCurrentPredictedUB = Constants.Infinity
                 self.TabuCurrentSolLB = Constants.Infinity
                 self.DescentBestMove = ("", -1, -1)

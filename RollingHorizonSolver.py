@@ -145,7 +145,7 @@ class RollingHorizonSolver:
 
 
             if Constants.Debug:
-                print " Solve instance with time window [ %r, %r]"%( timetodecide, timetodecide + self.WindowSize )
+                print(" Solve instance with time window [ %r, %r]"%( timetodecide, timetodecide + self.WindowSize ))
 
             timedemandknownuntil = timetodecide - 1
 
@@ -160,8 +160,8 @@ class RollingHorizonSolver:
                      wronginventory =  True
 
                 if wronginventory:
-                    print startinginventory
-                    print lastInventory
+                    print(startinginventory)
+                    print(lastInventory)
                     raise NameError( "Inventory computation is wrong for product %s, real: %s computed: %s" %(p, lastInventory[p], startinginventory[p] ) )
 
             if Constants.IsRule( self.Model ):
@@ -228,8 +228,8 @@ class RollingHorizonSolver:
 
 
         if Constants.Debug:
-            print "non rounded solution:"
-            print self.Solution.ProductionQuantity
+            print("non rounded solution:")
+            print(self.Solution.ProductionQuantity)
 
         quantity = [[  self.Solution.ProductionQuantity[0][t][p] for p in self.GlobalInstance.ProductSet] for t in self.GlobalInstance.TimeBucketSet]
         setups = [[ round(self.Solution.Production[0][t][p],0)  for p in self.GlobalInstance.ProductSet] for t in self.GlobalInstance.TimeBucketSet]
