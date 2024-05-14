@@ -1,0 +1,7 @@
+Start the SDDP algorithm 
+Use Papadakos method to generate strong cuts: True 
+Generate  cuts with linear relaxation: True 
+Generate  cuts with two-stage solution: True 
+Use valid inequalities: False 
+Run SDDP in a single tree: False 
+SDDP setting: '' 

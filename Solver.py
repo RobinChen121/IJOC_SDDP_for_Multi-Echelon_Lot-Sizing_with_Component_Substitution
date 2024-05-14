@@ -1,3 +1,6 @@
+
+
+
 from __future__ import absolute_import, division, print_function
 from Constants import Constants
 from ScenarioTree import ScenarioTree
@@ -173,7 +176,7 @@ class Solver( object ):
         treestructure = [1, 100] + [1] * (self.Instance.NrTimeBucket - 1) + [0]
         self.TestIdentifier.Model = Constants.ModelYQFix
         chosengeneration = self.ScenarioGeneration
-        self.ScenarioGeneration = Constants.RQMC
+        # self.ScenarioGeneration = Constants.RQMC
         solution, mipsolver = self.MRP(treestructure, False, recordsolveinfo=True)
         self.GivenSetup = [[solution.Production[0][t][p] for p in self.Instance.ProductSet] for t in self.Instance.TimeBucketSet]
         if Constants.Debug:
@@ -226,10 +229,10 @@ class Solver( object ):
 
         methodtemp = self.TestIdentifier.Method
         if self.TestIdentifier.Method == "MIP":
-            treestructure = [1, 200] + [1] * (self.Instance.NrTimeBucket - 1) + [0]
+            treestructure = [1, 200] + [1] * (self.Instance.NrTimeBucket - 1) + [0] # python 的列表可以直接通过相加扩容
             self.TestIdentifier.Model = Constants.ModelYQFix
             chosengeneration = self.TestIdentifier.ScenarioSampling
-            self.ScenarioGeneration = "RQMC"
+            # self.ScenarioGeneration = "RQMC" 
             solution, mipsolver = self.MRP(treestructure, False, recordsolveinfo=True)
             self.GivenSetup = [[solution.Production[0][t][p] for p in self.Instance.ProductSet] for t in self.Instance.TimeBucketSet]
             self.ScenarioGeneration = chosengeneration

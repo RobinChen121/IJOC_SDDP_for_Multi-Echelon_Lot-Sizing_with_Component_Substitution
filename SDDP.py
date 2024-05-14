@@ -87,7 +87,7 @@ class SDDP(object): # 继承 object 类，python默认自动继承，不用写 o
 
 
     #Constructor
-    def __init__(self, instance, testidentifier, treestructure):
+    def __init__(self, instance='SuperSmallIntance', testidentifier=Constants.ModelYFix, treestructure='All2'):
         self.Instance = instance
         self.TestIdentifier = testidentifier
         if self.TestIdentifier.SDDPSetting == "SingleCut":
@@ -663,7 +663,7 @@ class SDDP(object): # 继承 object 类，python默认自动继承，不用写 o
 
 
         treestructur = [1, 200] + [1] * (self.Instance.NrTimeBucket - 1) + [0]
-        scenariotree = ScenarioTree(self.Instance, treestructur, 0,
+        scenariotree = ScenarioTree(self.Instance, treestructur, seed=10000, # revise seed
                                         scenariogenerationmethod=Constants.RQMC )
 
 
@@ -1126,5 +1126,3 @@ class SDDP(object): # 继承 object 类，python默认自动继承，不用写 o
                 cut.BackwarStage = self.BackwardStage[t]
                 self.BackwardStage[t].SDDPCuts.append(cut)
 
-
-# SDDP.GetSDDPStage(2)

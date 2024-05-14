@@ -637,6 +637,7 @@ class Instance(object):
 
 
     # Read the Instance from an Excel file:
+    # 从excel 里面读取数例
     def ReadInstanceFromExelFile(self, instancename):
         wb2 = opxl.load_workbook("./Instances/" + instancename + ".xlsx")
 

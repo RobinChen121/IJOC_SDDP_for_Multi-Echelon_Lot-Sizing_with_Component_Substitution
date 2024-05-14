@@ -65,4 +65,4 @@ class RQMCGenerator(object):
     
 
 # test
-RQMCGenerator.RQMC01(10, 5)
+# RQMCGenerator.RQMC01(10, 5)

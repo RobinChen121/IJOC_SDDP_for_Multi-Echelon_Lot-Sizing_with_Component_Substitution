@@ -58,7 +58,7 @@ class Tool:
         df = pd.read_excel(filename,
                       header=[0, 1],
                       index_col=[0],
-                      sheetname=sheetname)
+                      sheet_name=sheetname)
                       
         return df
 

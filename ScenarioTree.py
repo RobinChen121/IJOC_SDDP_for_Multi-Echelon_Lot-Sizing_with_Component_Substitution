@@ -11,7 +11,7 @@ import math
 
 class ScenarioTree(object):
     #Constructor
-    def __init__(self, instance=None, branchperlevel=[], seed=-1, mipsolver=None, evaluationscenario = False, averagescenariotree = False,  givenfirstperiod = [], scenariogenerationmethod="MC", generateasYQfix = False, model = "YFix", CopyscenariofromYFIX=False, issymetric = False, givenscenarioset = [] ):
+    def __init__(self, instance=None, branchperlevel=[], seed=10000, mipsolver=None, evaluationscenario = False, averagescenariotree = False,  givenfirstperiod = [], scenariogenerationmethod="MC", generateasYQfix = False, model = "YFix", CopyscenariofromYFIX=False, issymetric = False, givenscenarioset = [] ):
         self.CopyscenariofromYFIX = CopyscenariofromYFIX
         self.Seed = seed
         if Constants.Debug:

@@ -19,7 +19,7 @@ TestIdentifier = None
 EvaluatorIdentifier = None
 
 #Solve or Evaluate
-Action = ""
+Action = "Solve"
 
 #The solution to evaluate
 EvaluateSolution = None
@@ -29,18 +29,18 @@ def CreateRequiredDir():
     requireddir = ["./Test","./CPLEXLog", "./Test/Statistic", "./Test/Bounds", "./Test/SolveInfo", "./Solutions", "./Evaluations", "./Temp", ]
     for dir in requireddir:
         if not os.path.exists(dir):
-            os.makedirs(dir)
+            os.makedirs(dir) # 创建文件夹
 
 def parseArguments():
     # Create argument parser
     parser = argparse.ArgumentParser()
     # Positional mandatory arguments
     parser.add_argument("Action", help="Evaluate, Solve, VSS, EVPI", type=str)
-    parser.add_argument("Instance", help="Cname of the instance.", type=str)
-    parser.add_argument("Model", help="Average/YQFix/YFiz .", type=str)
-    parser.add_argument("NrScenario", help="the number of scenario used for optimization", type=str)
-    parser.add_argument("ScenarioGeneration", help="MC,/RQMC.", type=str)
-    parser.add_argument("-s", "--ScenarioSeed", help="The seed used for scenario generation", type=int, default=-1)
+    parser.add_argument("Instance", help="Cname of the instance.", type=str, default='SuperSmallInstance')
+    parser.add_argument("Model", help="Average/YQFix/YFix .", type=str, default='YFix')
+    parser.add_argument("NrScenario", help="the number of scenario used for optimization", type=str, default = 'all2')
+    parser.add_argument("ScenarioGeneration", help="MC,/RQMC.", type=str, default = 'MC')
+    parser.add_argument("-s", "--ScenarioSeed", help="The seed used for scenario generation", type=int, default=10000) # revise, should not be -1
     # Optional arguments
     parser.add_argument("-p", "--policy", help="NearestNeighbor", type=str, default="_")
     parser.add_argument("-n", "--nrevaluation", help="nr scenario used for evaluation.", type=int, default=500)
@@ -94,11 +94,11 @@ def Solve(instance):
 
     solution = solver.Solve()
 
-    LastFoundSolution = solution
-    evaluator = Evaluator(instance, TestIdentifier, EvaluatorIdentifier, solver)
-    evaluator.RunEvaluation()
-    if Constants.LauchEvalAfterSolve and EvaluatorIdentifier.NrEvaluation>0:
-        evaluator.GatherEvaluation()
+    # LastFoundSolution = solution
+    # evaluator = Evaluator(instance, TestIdentifier, EvaluatorIdentifier, solver)
+    # evaluator.RunEvaluation()
+    # if Constants.LauchEvalAfterSolve and EvaluatorIdentifier.NrEvaluation>0:
+    #     evaluator.GatherEvaluation()
 
 
 
@@ -172,7 +172,7 @@ def GenerateInstances():
     data_rwriter = csv.writer(csvfile, delimiter=",", skipinitialspace=True)
     data_rwriter.writerow(instancecreated)
 
-if __name__ == '__main__':
+if __name__ == '__main__': # 这个是主程序
 
     #instance.ReadFromFile("lpopt_input.dat", Constants.NonStationary)
     #instance.ReadInstanceFromExelFile( "G0044432_NonStationary_b2_fe25_en_rk50_ll0_l20_HFalse_c0" )
@@ -190,8 +190,14 @@ if __name__ == '__main__':
 
     try:
         CreateRequiredDir()
-        parseArguments()
-
+        # parseArguments() # run in command line
+        
+        TestIdentifier = TestIdentificator(instancename='SuperSmallInstance',
+                                           model='YFix',
+                                           sampling='MC',
+                                           nrscenario='all2'
+                                           )
+        
         #For experimentation purpose, we remove some of the enhancement to SDDP depending on the value of the parameter "MIPSetting"
         if TestIdentifier.MIPSetting == "NoFirstCuts":
             Constants.SDDPGenerateCutWith2Stage = False
@@ -225,7 +231,7 @@ if __name__ == '__main__':
             Constants.SDDPForwardPassInSAATree = True
             EvaluatorIdentifier.NrEvaluation = 0
 
-        instance = Instance()
+        instance = Instance() # 算例对象，默认的那个5个阶段，3个产品，提前期为1
 
         # uncomment to generate Toysize instances for testing/development purpose
         #instance.DefineAsSuperSmallIntance()
@@ -234,8 +240,11 @@ if __name__ == '__main__':
         #uncomment to re-generate the instance
         #GenerateInstances()
 
-        instance.ReadInstanceFromExelFile(TestIdentifier.InstanceName)
-        Constants.AlgorithmTimeLimit = 30#900 *(instance.NrTimeBucket-instance.NrTimeBucketWithoutUncertaintyBefore)
+        instance.ReadInstanceFromExelFile(TestIdentifier.InstanceName) # 从 Excel里面读取数据
+        Constants.AlgorithmTimeLimit = 6
+        Action
+        
+        00 #900 *(instance.NrTimeBucket-instance.NrTimeBucketWithoutUncertaintyBefore)
         #instance.DrawSupplyChain()
     except KeyError:
         print(KeyError.message)

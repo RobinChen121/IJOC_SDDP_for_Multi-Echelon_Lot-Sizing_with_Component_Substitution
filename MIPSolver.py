@@ -35,7 +35,7 @@ class MIPSolver(object):
                  usesafetystockgrave=False,
                  rollinghorizon=False,
                  expandfirstnode = False, #expandfirstnode is used to remove the non anticipativity constraint, if used, variable of the rootnode of the tree are created for each scenario
-                 logfile="",
+                 logfile="result", # revise error
                  givenSGrave=[]):
 
         # Define some attributes and functions which help to set the index of the variable.
@@ -1485,7 +1485,7 @@ class MIPSolver(object):
         nrconstraints = -1
         # < or >
         if  not self.EvaluateSolution and not self.EVPI and self.logfilename < "NO":
-            nrvariable, nrconstraints = self.ReadNrVariableConstraint(Constants.GetPathCPLEXLog()+"/%s.txt" % self.logfilename)
+            nrvariable, nrconstraints = self.ReadNrVariableConstraint(Constants.GetPathCPLEXLog()+"%s.txt" % self.logfilename)
 
         buildtime = end_modeling - start_time
         solvetime = time.time() - end_modeling
