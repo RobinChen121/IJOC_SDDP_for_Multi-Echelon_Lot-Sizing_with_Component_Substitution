@@ -9,13 +9,16 @@ from Constants import Constants
 import math
 #from matplotlib import pyplot as PLT
 
+# 构造情景树的关键代码
 class ScenarioTree(object):
     #Constructor
+    # 可以自己调用自己，有点麻烦
     def __init__(self, instance=None, branchperlevel=[], seed=10000, mipsolver=None, evaluationscenario = False, averagescenariotree = False,  givenfirstperiod = [], scenariogenerationmethod="MC", generateasYQfix = False, model = "YFix", CopyscenariofromYFIX=False, issymetric = False, givenscenarioset = [] ):
         self.CopyscenariofromYFIX = CopyscenariofromYFIX
         self.Seed = seed
         if Constants.Debug:
-            print("Create a tree with seed %r structure: %r"%(seed, branchperlevel))
+            pass
+        print("Create a tree with seed %r structure: %r"%(seed, branchperlevel))
         np.random.seed(seed)
         self.Nodes = []
         self.Owner = mipsolver
@@ -28,7 +31,7 @@ class ScenarioTree(object):
 
         #For some types of evaluation, the demand of the  first periods are given and the rest is stochastic
         self.GivenFirstPeriod = givenfirstperiod
-        self.FollowGivenUntil = len(self.GivenFirstPeriod)
+        self.FollowGivenUntil = len(self.GivenFirstPeriod) # 第一阶段给定的需求
 
         #In case the scenario tree has to be the same aas the two stage (YQFix) scenario tree.
         self.GenerateasYQfix = generateasYQfix

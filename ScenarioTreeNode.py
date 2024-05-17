@@ -93,6 +93,7 @@ class ScenarioTreeNode(object):
                         nextdemands = self.Owner.SymetricDemand[t - 1]
                         probabilities = self.Owner.SymetricProba[t - 1]
                 else:
+                    # 默认正态分布需求
                     nextdemands, probabilities = ScenarioTreeNode.CreateDemandNormalDistributiondemand(self.Instance,
                                                                                                        t - 1,
                                                                                                        nrbranch,
