@@ -190,7 +190,7 @@ class Instance(object):
         self.ProcessingTime = [[1, 0, 0],
                                [0, 1, 0],
                                [0, 0, 1]]
-        self.YearlyAverageDemand = [10, 0, 0]
+        self.YearlyAverageDemand = [10, 0, 0]  # 产品2与产品3的需求都是0
         self.ForecastedAverageDemand = [[10, 0, 0],
                                         [10, 0, 0],
                                         [10, 0, 0],

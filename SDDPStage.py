@@ -319,6 +319,7 @@ class SDDPStage(object):
     #return the index of the production variable associated with the product p at time t
     def GetIndexProductionVariable(self, p, t):
         if self.IsFirstStage():
+            # wrong
             return self.StartProduction + p*self.Instance.NrTimeBucket + t
         else:
             raise ValueError('Production variables are only defined at stage 0')
@@ -1171,10 +1172,11 @@ class SDDPStage(object):
         #Variable for the consumption
         self.Cplex.variables.add(obj=[math.pow(self.Instance.Gamma,  self.GetTimePeriodAssociatedToQuantityVariable(p, t))
                                    #   * self.FixedScenarioPobability[w]
-                                      * c[3]
+                                      * p[3]
                                       for t in self.RangePeriodQty
                                       for w in self.FixedScenarioSet
-                                      for c in self.Instance.ConsumptionSet],
+                                      # for c in self.Instance.ConsumptionSet
+                                      for p in self.GetProductWithStockVariable(t)], # revise, not c ,should be p
                                  lb=[0.0] * self.NrConsumptionVariable,
                                  ub=[self.M] * self.NrConsumptionVariable)
 
@@ -2159,6 +2161,7 @@ class SDDPStage(object):
         lbtuple=[]
         ubtuples=[]
 
+        # 每个阶段每个产品有一个索引，似乎像密码一样
         indexarray = [self.GetIndexProductionVariable(p, t)
                       for t in self.Instance.TimeBucketSet
                       for p in self.Instance.ProductSet]
@@ -2166,7 +2169,8 @@ class SDDPStage(object):
             for t in self.Instance.TimeBucketSet:
                 lbtuple.append((self.GetIndexProductionVariable(p, t), float(self.SDDPOwner.HeuristicSetupValue[t][p])))
                 ubtuples.append((self.GetIndexProductionVariable(p, t), float(self.SDDPOwner.HeuristicSetupValue[t][p])))
-
+        
+        self.DefineVariables()
         if makecontinuous:
             self.Cplex.variables.set_types(zip(indexarray, ["C"] * len(indexarray)))
             self.Cplex.set_problem_type(self.Cplex.problem_type.LP)

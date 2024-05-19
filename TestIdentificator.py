@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 class TestIdentificator( object ):
 
     # Constructor
-    def __init__(self, instancename, model, sampling, nrscenario,method='MIP', scenarioseed=10000, useevpi=False, nrscenarioforward=1,mipsetting='', sddpsetting='', hybridphsetting='', mllocalsearchsetting=''):
+    def __init__(self, instancename, model, sampling, nrscenario,method='SDDP', scenarioseed=10000, useevpi=False, nrscenarioforward=1,mipsetting='', sddpsetting='', hybridphsetting='', mllocalsearchsetting=''):
         self.InstanceName = instancename
         self.Model = model
         self.Method = method

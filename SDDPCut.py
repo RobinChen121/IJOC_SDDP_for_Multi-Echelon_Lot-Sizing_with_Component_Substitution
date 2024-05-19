@@ -4,6 +4,7 @@ from Constants import Constants
 #from sets import Set
 
 #This class contains the parameters and method to generate and store the cuts.
+# 最重要的程序
 class SDDPCut(object):
 
     def __init__(self, owner=None, forwardstage=None, trial=-1, backwardscenario=-1):

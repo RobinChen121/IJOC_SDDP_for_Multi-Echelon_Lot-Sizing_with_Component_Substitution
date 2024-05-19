@@ -119,6 +119,7 @@ class SDDP(object): # 继承 object 类，python默认自动继承，不用写 o
         self.StartingSeed = self.TestIdentifier.ScenarioSeed
 
         self.NrSAAScenarioInPeriod = treestructure[1:-1]
+        # 在这里构造了 SDDPStage 的类
         self.ForwardStage = [SDDPStage(owner=self, decisionstage=t, fixedccenarioset=[0], isforward=True, futurscenarioset =range(self.NrSAAScenarioInPeriod[t])) for t in range(nrstage)] \
                              + [SDDPLastStage(owner=self, decisionstage=nrstage, fixedccenarioset=[0], isforward=True)]
 
@@ -664,7 +665,7 @@ class SDDP(object): # 继承 object 类，python默认自动继承，不用写 o
 
         treestructur = [1, 200] + [1] * (self.Instance.NrTimeBucket - 1) + [0]
         scenariotree = ScenarioTree(self.Instance, treestructur, seed=10000, # revise seed
-                                        scenariogenerationmethod=Constants.RQMC )
+                                        scenariogenerationmethod=Constants.MonteCarlo ) # change to MC, not RQMC
 
 
         mipsolver = MIPSolver(self.Instance, Constants.ModelYQFix, scenariotree)
@@ -728,6 +729,7 @@ class SDDP(object): # 继承 object 类，python默认自动继承，不用写 o
             if createpreliminarycuts and (Stop or self.CheckStoppingRelaxationCriterion(phase)):
                 phase += 1
                 if phase < 3:
+                    
                     self.ForwardStage[0].ChangeSetupToValueOfTwoStage()
                     self.WriteInTraceFile("Change stage 1 problem to heuristic solution \n")
                     self.CurrentUpperBound = Constants.Infinity

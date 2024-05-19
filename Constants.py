@@ -50,7 +50,7 @@ class Constants( object ):
     EvaluationScenarioSeed = 2934
 
     #Running option
-    Debug = False
+    Debug = True  # true for debugging
     PrintSolutionFileToExcel = True
     PrintDetailsExcelFiles = False
     PrintOnlyFirstStageDecision = True

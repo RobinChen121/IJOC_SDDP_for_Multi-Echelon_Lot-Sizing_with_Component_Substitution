@@ -4,7 +4,7 @@ from Constants import Constants
 from Tool import Tool
 from RQMCGenerator import RQMCGenerator
 from scipy import stats
-
+import random
 
 class ScenarioTreeNode(object):
     #Count the number of node created
@@ -26,7 +26,7 @@ class ScenarioTreeNode(object):
         ScenarioTreeNode.NrNode = ScenarioTreeNode.NrNode + 1
         self.FirstBranchID = firstbranchid
         self.Time = time
-        self.CreateChildrens(nrbranch, averagescenariotree)
+        self.CreateChildrens(nrbranch, averagescenariotree) # 通过这个生成需求值与对应的概率值
         # The probability associated with the node
         self.Probability = proabibilty
         # The demand for each product associated with the node of the sceanrio
@@ -38,7 +38,8 @@ class ScenarioTreeNode(object):
         # The attribute below contains the index of the CPLEX variables (quanity, production, invenotry) associated with the node for each product at the relevant time.
         self.QuanitityVariable = []  # will be built later
         self.ConsumptionVariable = [] # will be built later
-        self.ProductionVariable = []  # will be built later
+        self.ProductionVariable = [] 
+        # will be built later
         self.InventoryVariable = []  # will be built later
         self.BackOrderVariable = []  # will be built later
         # The attributes below contain the list of variable for all time period of the scenario
@@ -109,15 +110,16 @@ class ScenarioTreeNode(object):
                 self.Owner.TreeStructure[t] = nrbranch
 
 
-
+            # there may be something wrong here
             usaverageforbranch = (t >= (self.Instance.NrTimeBucket - self.Instance.NrTimeBucketWithoutUncertaintyAfter)) \
-                                 or (t < self.Instance.NrTimeBucketWithoutUncertaintyBefore) \
-                                 or self.Owner.AverageScenarioTree
+                                 # or (t < self.Instance.NrTimeBucketWithoutUncertaintyBefore) \
+                                 # or self.Owner.AverageScenarioTree
 
             nextfirstbranchid = [self.FirstBranchID for b in range(nrbranch)]
             if t == max(self.Owner.FollowGivenUntil + 1, 1):
                 nextfirstbranchid = [b for b in range(nrbranch)]
 
+            # 自己调用自己，挺高级的
             self.Branches = [ScenarioTreeNode(owner=self.Owner,
                                               parent=self,
                                               firstbranchid=nextfirstbranchid[b],
